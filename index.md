@@ -84,4 +84,34 @@ function App() {
 export default App
 ```
 
+文字列をZodで数字に変換してみる
+
+```.ts
+import './App.css'
+import { useForm, SubmitHandler } from "react-hook-form"
+import { AgeVerification } from './schema';
+import { z } from "zod"
+
+function App() {
+  const { register, handleSubmit} = useForm<AgeVerification>();
+
+  const onSubmit: SubmitHandler<AgeVerification> = (data) => {
+    const age = z.coerce.number().parse(data.age)
+    console.log({age})
+  }
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <p>年齢を入力してください</p>
+      <input placeholder='20' {...register("age")} />
+      <button type='submit'>submit</button>
+    </form>
+  )
+}
+
+export default App
+```
+
+こんな感じでできるけど、handlerの中で色々やらずschema側で変換を完結させたい
+
 ## 参考

@@ -1,6 +1,6 @@
-
 import './App.css'
-import {useForm, SubmitHandler} from "react-hook-form"
+import { useForm, SubmitHandler } from "react-hook-form"
+import { z } from "zod"
 
 type FormValues = {
   age: number
@@ -10,7 +10,8 @@ function App() {
   const { register, handleSubmit} = useForm<FormValues>();
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log(data)
+    const age = z.coerce.number().parse(data.age)
+    console.log({age})
   }
 
   return (
