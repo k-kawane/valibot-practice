@@ -1,14 +1,14 @@
-import { z } from "zod"
+import { object, type Output, string, transform } from 'valibot';
 
-// export const ageVerification = z.object({
-//   age: z.coerce.number()
-// })
-export const ageVerification = z.object({
-  age: z.string()
-}).transform((values)=> {
-  return {
-    age: Number(values.age)
+export const ageVerification = transform(
+  object({
+    age: string()
+  }),
+  (input) => {
+    return {
+      age: Number(input.age)
+    }
   }
-})
+)
 
-export type AgeVerification = z.infer<typeof ageVerification>
+export type AgeVerification = Output<typeof ageVerification>

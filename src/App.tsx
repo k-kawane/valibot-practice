@@ -1,12 +1,12 @@
 import './App.css'
 import { useForm, SubmitHandler } from "react-hook-form"
 import { AgeVerification, ageVerification } from './schema'
-import { zodResolver } from '@hookform/resolvers/zod';
+import { valibotResolver } from '@hookform/resolvers/valibot';
 
 
 function App() {
   const { register, handleSubmit, formState: {errors} } = useForm<AgeVerification>({
-    resolver: zodResolver(ageVerification),
+    resolver: valibotResolver(ageVerification),
     defaultValues: {
       age: "20" as unknown as number
     }
