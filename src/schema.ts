@@ -1,14 +1,7 @@
-import { object, type Output, string, transform } from 'valibot';
+import { object, type Output, number, coerce } from 'valibot';
 
-export const ageVerification = transform(
-  object({
-    age: string()
-  }),
-  (input) => {
-    return {
-      age: Number(input.age)
-    }
-  }
-)
+export const ageVerification = object({
+  age: coerce(number(), (input) => Number(input))
+})
 
 export type AgeVerification = Output<typeof ageVerification>

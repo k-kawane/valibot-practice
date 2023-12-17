@@ -8,7 +8,7 @@ function App() {
   const { register, handleSubmit, formState: {errors} } = useForm<AgeVerification>({
     resolver: valibotResolver(ageVerification),
     defaultValues: {
-      age: "20" as unknown as number
+      age: 20
     }
   });
 
