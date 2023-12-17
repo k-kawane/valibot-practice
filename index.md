@@ -23,6 +23,37 @@ package.jsonの作成
 ```
 （NPMパッケージのパッケージマネージャーにはpnpmを使用）
 
-## まずはZodやってみる
+ViteのReactテンプレートを使用
+```.sh
+pnpm create vite valibot-practice --template react
+```
+
+ここで色々エラーが発生
+```.sh
+ WARN  GET https://registry.npmjs.org/@types%2Freact error (ERR_INVALID_THIS). Will retry in 1 minute. 1 retries left.
+ WARN  GET https://registry.npmjs.org/@types%2Freact-dom error (ERR_INVALID_THIS). Will retry in 1 minute. 1 retries left.
+ WARN  GET https://registry.npmjs.org/@vitejs%2Fplugin-react error (ERR_INVALID_THIS). Will retry in 1 minute. 1 retries left.
+ WARN  GET https://registry.npmjs.org/vite error (ERR_INVALID_THIS). Will retry in 1 minute. 1 retries left.
+ WARN  GET https://registry.npmjs.org/react error (ERR_INVALID_THIS). Will retry in 1 minute. 1 retries left.
+ WARN  GET https://registry.npmjs.org/react-dom error (ERR_INVALID_THIS). Will retry in 1 minute. 1 retries left.
+ ERR_PNPM_META_FETCH_FAIL  GET https://registry.npmjs.org/@types%2Freact-dom: Value of "this" must be of type URLSearchParams
+ ERR_PNPM_META_FETCH_FAIL  GET https://registry.npmjs.org/@types%2Freact: Value of "this" must be of type URLSearchParams
+ ERR_PNPM_META_FETCH_FAIL  GET https://registry.npmjs.org/vite: Value of "this" must be of type URLSearchParams
+```
+
+https://github.com/pnpm/pnpm/issues/6424
+
+Nodeのバージョンを下げてみる
+```.sh
+% fnm list-remote
+% fnm install 19.9.0
+```
+
+無事`pnpm dev`成功
+
+## まずはZodでやってみる
+ ```.sh
+ % pnpm install react-hook-form zod
+ ```
 
 ## 参考
