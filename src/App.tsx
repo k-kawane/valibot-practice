@@ -8,7 +8,7 @@ function App() {
   const { register, handleSubmit, formState: {errors} } = useForm<AgeVerification>({
     resolver: zodResolver(ageVerification),
     defaultValues: {
-      age: 20
+      age: "20" as unknown as number
     }
   });
 

@@ -130,4 +130,53 @@ function App() {
 export default App
 ```
 
+簡単な型変換ならそれでいいが、transformするとasを書かないといけなくなる
+```.ts
+import { z } from "zod"
+
+export const ageVerification = z.object({
+  age: z.string()
+}).transform((values)=> {
+  return {
+    age: Number(values.age)
+  }
+})
+
+export type AgeVerification = z.infer<typeof ageVerification>
+```
+
+```.tsx
+import './App.css'
+import { useForm, SubmitHandler } from "react-hook-form"
+import { AgeVerification, ageVerification } from './schema'
+import { zodResolver } from '@hookform/resolvers/zod';
+
+
+function App() {
+  const { register, handleSubmit, formState: {errors} } = useForm<AgeVerification>({
+    resolver: zodResolver(ageVerification),
+    defaultValues: {
+      age: "20" as unknown as number
+    }
+  });
+
+  const onSubmit: SubmitHandler<AgeVerification> = (data) => {
+    console.log(data)
+  }
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <p>年齢を入力してください</p>
+      <input {...register("age")} />
+      {errors.age?.message && <p style={{color: 'red'}}>{errors.age.message}</p>}
+      <button type='submit'>submit</button>
+    </form>
+  )
+}
+
+export default App
+```
+
+### valibot使ってみた
+
 ## 参考
