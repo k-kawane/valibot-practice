@@ -108,7 +108,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 function App() {
   const { register, handleSubmit } = useForm<AgeVerification>({
-    resolver: zodResolver(ageVerification)
+    resolver: zodResolver(ageVerification),
+    defaultValues: {
+      age: 20
+    }
   });
 
   const onSubmit: SubmitHandler<AgeVerification> = (data) => {
