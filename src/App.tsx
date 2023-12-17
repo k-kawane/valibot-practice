@@ -1,17 +1,16 @@
 import './App.css'
 import { useForm, SubmitHandler } from "react-hook-form"
-import { z } from "zod"
+import { AgeVerification, ageVerification } from './schema'
+import { zodResolver } from '@hookform/resolvers/zod';
 
-type FormValues = {
-  age: number
-}
 
 function App() {
-  const { register, handleSubmit} = useForm<FormValues>();
+  const { register, handleSubmit } = useForm<AgeVerification>({
+    resolver: zodResolver(ageVerification)
+  });
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
-    const age = z.coerce.number().parse(data.age)
-    console.log({age})
+  const onSubmit: SubmitHandler<AgeVerification> = (data) => {
+    console.log(data)
   }
 
   return (

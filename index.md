@@ -85,19 +85,34 @@ export default App
 ```
 
 文字列をZodで数字に変換してみる
+```.sh
+% pnpm install @hookform/resolvers
+```
+
+```.ts
+import { z } from "zod"
+
+export const ageVerification = z.object({
+  age: z.coerce.number()
+})
+
+export type AgeVerification = z.infer<typeof ageVerification>
+```
 
 ```.ts
 import './App.css'
 import { useForm, SubmitHandler } from "react-hook-form"
-import { AgeVerification } from './schema';
-import { z } from "zod"
+import { AgeVerification, ageVerification } from './schema'
+import { zodResolver } from '@hookform/resolvers/zod';
+
 
 function App() {
-  const { register, handleSubmit} = useForm<AgeVerification>();
+  const { register, handleSubmit } = useForm<AgeVerification>({
+    resolver: zodResolver(ageVerification)
+  });
 
   const onSubmit: SubmitHandler<AgeVerification> = (data) => {
-    const age = z.coerce.number().parse(data.age)
-    console.log({age})
+    console.log(data)
   }
 
   return (
@@ -111,7 +126,5 @@ function App() {
 
 export default App
 ```
-
-こんな感じでできるけど、handlerの中で色々やらずschema側で変換を完結させたい
 
 ## 参考
