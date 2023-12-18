@@ -1,28 +1,27 @@
 import './App.css'
-import { useForm, SubmitHandler } from "react-hook-form"
-import { AgeVerification, ageVerification } from './schema'
-import { valibotResolver } from '@hookform/resolvers/valibot';
-
+import { AgeVerification } from './schema'
+import { useForm, SubmitHandler } from '@modular-forms/react';
 
 function App() {
-  const { register, handleSubmit, formState: {errors} } = useForm<AgeVerification>({
-    resolver: valibotResolver(ageVerification),
-    defaultValues: {
-      age: 20
-    }
-  });
+  const [, {Form, Field}] = useForm<AgeVerification>({});
 
   const onSubmit: SubmitHandler<AgeVerification> = (data) => {
     console.log(data)
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <Form onSubmit={onSubmit}>
       <p>年齢を入力してください</p>
-      <input {...register("age")} />
-      {errors.age?.message && <p style={{color: 'red'}}>{errors.age.message}</p>}
+      <Field name='age' type='number'>
+        {(field, props) => (
+          <>
+            <input {...props} type='number' />
+            {field.error && <p style={{color: 'red'}}>{field.error}</p>}
+          </>
+        )}
+      </Field>
       <button type='submit'>submit</button>
-    </form>
+    </Form>
   )
 }
 
