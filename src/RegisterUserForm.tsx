@@ -19,12 +19,15 @@ export function RegisterUserForm() {
           <Field name="email">
             {(field, props) => (
               <>
-                <input
-                  {...props}
-                  id="email"
-                  type="email"
-                  {...stylex.props(styles.textbox)}
-                />
+                <div {...stylex.props(styles.textboxMaskContainer)}>
+                  <div {...stylex.props(styles.textboxMask)} />
+                  <input
+                    {...props}
+                    id="email"
+                    type="email"
+                    {...stylex.props(styles.textbox)}
+                  />
+                </div>
                 {field.error && (
                   <p {...stylex.props(styles.errorMsg)}>{field.error}</p>
                 )}
@@ -80,6 +83,18 @@ const styles = stylex.create({
   },
   textboxContainer: {
     textAlign: "left",
+  },
+  textboxMaskContainer: {
+    position: "relative",
+  },
+  textboxMask: {
+    position: "absolute",
+    top: "4px",
+    left: "4px",
+    width: "calc(100% - 8px)",
+    height: "calc(100% - 8px)",
+    backdropFilter: "blur(4px)",
+    pointerEvents: "none",
   },
   textbox: {
     fontSize: 16,
